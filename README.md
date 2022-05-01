@@ -1,2 +1,2 @@
 # projeto-clinica
-Projeto referente a uma clinica, utilizando o framework Java Spring Boot
+Projeto referente a uma clínica, utilizando o framework Java Spring Boot
