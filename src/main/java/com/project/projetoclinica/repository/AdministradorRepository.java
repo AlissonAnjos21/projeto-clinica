@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface AdministradorRepository {
     List<Administrador> listarTudo();
+    Administrador selecionarPorId();
+
 }

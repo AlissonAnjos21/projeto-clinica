@@ -3,7 +3,9 @@ package com.project.projetoclinica.controller;
 import com.project.projetoclinica.domain.Administrador;
 import com.project.projetoclinica.service.AdministradorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,12 @@ public class AdministradorController {
     private final AdministradorService administradorService;
 
     @GetMapping
-    public List<Administrador> listar() {
-        return administradorService.listarTudo();
+    public ResponseEntity<List<Administrador>> listar() {
+        return ResponseEntity.ok(administradorService.listarTudo());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Administrador> selecionaPorId(@PathVariable long id) {
+        return ResponseEntity.ok(administradorService.selecionarPorId(id));
     }
 }

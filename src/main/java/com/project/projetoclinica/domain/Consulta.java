@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Consulta {
-    private long id;
+    private Long id;
     private String medico;
     private String paciente;
     private String data;
