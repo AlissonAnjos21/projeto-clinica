@@ -11,7 +11,7 @@ import java.util.List;
 public class AdministradorService {
     private List<Administrador> administradores = List.of(new Administrador(1L, "Adm1", "123"), new Administrador(2L, "Adm2", "456"));
 
-    public List<Administrador> listarTudo() {
+    public List<Administrador> listar() {
         return administradores;
     }
 
