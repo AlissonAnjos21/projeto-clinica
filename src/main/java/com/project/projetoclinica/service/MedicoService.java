@@ -13,17 +13,17 @@ public class MedicoService {
     private List<Medico> medicos = List.of(new Medico(
             1L, "Raquel", "###.###.###-##", " XX.XXX.XXX/0001-XX", "CRM/BA 123456",
             "05/12/2003", "Rua Muito Ruim", "emaildaraquel@emails.com",
-            "###########", "Público", "Infectologia"), new Medico(
+            "###########", "Público", "Psiquiatria"), new Medico(
                     2L, "Caio", "###.###.###-##", " XX.XXX.XXX/0001-XX", "CRM/BA 456789",
             "29/03/2004", "Rua Muito Boa", "emaildocaio@emails.com",
-            "###########", "Privado", "Psiquiatria"
+            "###########", "Privado", "Infectologia"
     ));
 
-    public List<Medico> listar() {
+    public List<Medico> list() {
         return medicos;
     }
 
-    public Medico selecionarPorId(long id) {
+    public Medico findById(long id) {
         return medicos.stream().filter(medico -> medico.getId().equals(id)).findFirst().orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.BAD_REQUEST, "Médico não encontrado."));
     }

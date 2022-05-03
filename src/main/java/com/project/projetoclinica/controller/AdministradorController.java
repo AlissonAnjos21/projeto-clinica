@@ -19,12 +19,12 @@ public class AdministradorController {
     private final AdministradorService administradorService;
 
     @GetMapping
-    public ResponseEntity<List<Administrador>> listar() {
-        return ResponseEntity.ok(administradorService.listar());
+    public ResponseEntity<List<Administrador>> list() {
+        return ResponseEntity.ok(administradorService.list());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Administrador> selecionarPorId(@PathVariable long id) {
-        return ResponseEntity.ok(administradorService.selecionarPorId(id));
+    public ResponseEntity<Administrador> findById(@PathVariable long id) {
+        return ResponseEntity.ok(administradorService.findById(id));
     }
 }

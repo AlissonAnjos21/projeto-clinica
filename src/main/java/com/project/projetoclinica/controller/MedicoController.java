@@ -19,13 +19,13 @@ public class MedicoController {
     private final MedicoService medicoService;
 
     @GetMapping
-    public ResponseEntity<List<Medico>> listar() {
-        return ResponseEntity.ok(medicoService.listar());
+    public ResponseEntity<List<Medico>> list() {
+        return ResponseEntity.ok(medicoService.list());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Medico> selecionarPorId(@PathVariable long id) {
-        return ResponseEntity.ok(medicoService.selecionarPorId(id));
+    public ResponseEntity<Medico> findById(@PathVariable long id) {
+        return ResponseEntity.ok(medicoService.findById(id));
     }
 
 }

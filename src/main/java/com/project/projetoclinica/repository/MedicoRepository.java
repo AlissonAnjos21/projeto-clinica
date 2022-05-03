@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface MedicoRepository {
-    List<Medico> listar();
-    Medico selecionarPorId();
+    List<Medico> list();
+    Medico findById();
 
 }
