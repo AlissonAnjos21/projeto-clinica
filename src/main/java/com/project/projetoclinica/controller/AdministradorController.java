@@ -20,11 +20,11 @@ public class AdministradorController {
 
     @GetMapping
     public ResponseEntity<List<Administrador>> listar() {
-        return ResponseEntity.ok(administradorService.listarTudo());
+        return ResponseEntity.ok(administradorService.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Administrador> selecionaPorId(@PathVariable long id) {
+    public ResponseEntity<Administrador> selecionarPorId(@PathVariable long id) {
         return ResponseEntity.ok(administradorService.selecionarPorId(id));
     }
 }
