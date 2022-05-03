@@ -11,10 +11,10 @@ import java.util.List;
 public class MedicoService {
 
     private List<Medico> medicos = List.of(new Medico(
-            1L, "Raquel", "###.###.###-##", " XX. XXX. XXX/0001-XX", "CRM/BA 123456",
+            1L, "Raquel", "###.###.###-##", " XX.XXX.XXX/0001-XX", "CRM/BA 123456",
             "05/12/2003", "Rua Muito Ruim", "emaildaraquel@emails.com",
             "###########", "Público", "Infectologia"), new Medico(
-                    2L, "Caio", "###.###.###-##", " XX. XXX. XXX/0001-XX", "CRM/BA 456789",
+                    2L, "Caio", "###.###.###-##", " XX.XXX.XXX/0001-XX", "CRM/BA 456789",
             "29/03/2004", "Rua Muito Boa", "emaildocaio@emails.com",
             "###########", "Privado", "Psiquiatria"
     ));
