@@ -7,8 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class Consulta {
     private Long id;
-    private Medico medico;
-    private Paciente paciente;
+    private String medico;
+    private String paciente;
     private String data;
     private String hora;
     private float valor;

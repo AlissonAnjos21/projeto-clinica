@@ -1,8 +1,6 @@
 package com.project.projetoclinica.service;
 
 import com.project.projetoclinica.domain.Consulta;
-import com.project.projetoclinica.domain.Medico;
-import com.project.projetoclinica.repository.ConsultaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,21 +12,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsultaService {
 
-    private final MedicoService medicoService;
-    private final PacienteService pacienteService;
-
     private List<Consulta> consultas = List.of(new Consulta(
             1L,
-            medicoService.findById(1L),
-            pacienteService.findById(1L),
+            "Raquel",
+            "Pessoa01",
             "03/05/2022",
             "16:30:00",
             500,
             "Dinheiro"
     ), new Consulta(
             2L,
-            medicoService.findById(2L),
-            pacienteService.findById(2L),
+            "Caio",
+            "Pessoa02",
             "04/05/2022",
             "17:00:00",
             1000,
