@@ -2,6 +2,7 @@ package com.project.projetoclinica.service;
 
 import com.project.projetoclinica.domain.Consulta;
 import com.project.projetoclinica.domain.Medico;
+import com.project.projetoclinica.repository.ConsultaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

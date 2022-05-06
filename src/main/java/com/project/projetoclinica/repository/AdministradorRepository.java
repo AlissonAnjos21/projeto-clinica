@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface AdministradorRepository {
-    List<Administrador> list();
-    Administrador findById();
+    public List<Administrador> list();
+    public Administrador findById();
 
 }
