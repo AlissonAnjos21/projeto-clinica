@@ -31,4 +31,16 @@ public class MedicoController {
         return new ResponseEntity<>(medicoService.save(medico), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        medicoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> replace(@RequestBody Medico medico) {
+        medicoService.replace(medico);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

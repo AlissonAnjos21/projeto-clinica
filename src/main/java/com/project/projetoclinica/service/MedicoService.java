@@ -56,4 +56,13 @@ public class MedicoService {
         return medico;
     }
 
+    public void delete(long id) {
+        medicos.remove(findById(id));
+    }
+
+    public void replace(Medico medico) {
+        delete(medico.getId());
+        medicos.add(medico);
+    }
+
 }
