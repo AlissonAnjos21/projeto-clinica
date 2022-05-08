@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface ConsultaRepository {
-    public List<Consulta> list();
-    public Consulta findById();
+    List<Consulta> list();
+    Consulta findById();
 
 }

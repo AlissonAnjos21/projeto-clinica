@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface PacienteRepository {
-    public List<Paciente> list();
-    public Paciente findById();
+    List<Paciente> list();
+    Paciente findById();
 }
