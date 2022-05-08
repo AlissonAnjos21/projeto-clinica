@@ -3,6 +3,8 @@ package com.project.projetoclinica.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
 @AllArgsConstructor
 public class Paciente {
@@ -16,6 +18,6 @@ public class Paciente {
     private String ocupacao;
     private String endereco;
     private String planoSaude;
-    private String[] alergias;
-    private String[] doencas;
+    private ArrayList<String> alergias;
+    private ArrayList<String> doencas;
 }

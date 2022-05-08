@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +22,8 @@ public class PacienteService {
                     "Programadora",
                     "Rua das Ruas",
                     "Familiar",
-                    new String[]{"camarão", "amendoim"},
-                    new String[]{"diabetes", "alzheimer", "osteoporose"}),
+                    new ArrayList<>(List.of("camarão", "amendoim")),
+                    new ArrayList<>(List.of("diabetes", "alzheimer", "osteoporose"))),
                     new Paciente(
                     2L,
                     "Pessoa2",
@@ -34,8 +35,8 @@ public class PacienteService {
                     "Paleontóloga",
                     "Rua das Sem Saída",
                     "Familiar",
-                    new String[]{"água", "ovos"},
-                    new String[]{"câncer", "asma"}));
+                    new ArrayList<>(List.of("água", "ovos")),
+                    new ArrayList<>(List.of("câncer", "asma"))));
 
     public List<Paciente> list() {
         return pacientes;
@@ -45,5 +46,6 @@ public class PacienteService {
         return pacientes.stream().filter(pacientes -> pacientes.getId().equals(id)).findFirst().orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paciente não encontrado."));
     }
+
 
 }
