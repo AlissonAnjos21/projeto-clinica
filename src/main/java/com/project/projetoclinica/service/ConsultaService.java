@@ -12,18 +12,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsultaService {
 
+    MedicoService medicoService = new MedicoService();
+    PacienteService pacienteService = new PacienteService();
+
     private List<Consulta> consultas = List.of(new Consulta(
             1L,
-            "Raquel",
-            "Pessoa01",
+            medicoService.findById(1L),
+            pacienteService.findById(1L),
             "03/05/2022",
             "16:30:00",
             500,
             "Dinheiro"
     ), new Consulta(
             2L,
-            "Caio",
-            "Pessoa02",
+            medicoService.findById(2L),
+            pacienteService.findById(2L),
             "04/05/2022",
             "17:00:00",
             1000,
