@@ -14,7 +14,7 @@ public class Medico {
     private String dataNascimento;
     private String endereco;
     private String email;
-    private String numeroTelefone;
+    private String telefone;
     private String tipoContrato;
     private String especialidade;
 }
