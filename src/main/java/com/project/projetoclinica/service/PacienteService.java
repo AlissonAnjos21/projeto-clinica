@@ -58,4 +58,14 @@ public class PacienteService {
         pacientes.add(paciente);
         return paciente;
     }
+
+    public void delete(long id) {
+        pacientes.remove(findById(id));
+    }
+
+    public void replace(Paciente paciente) {
+        delete(paciente.getId());
+        pacientes.add(paciente);
+    }
+
 }
