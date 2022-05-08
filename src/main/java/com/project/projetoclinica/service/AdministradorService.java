@@ -38,4 +38,13 @@ public class AdministradorService {
 
     }
 
+    public void delete(long id) {
+        administradores.remove(findById(id));
+    }
+
+    public void replace(Administrador administrador) {
+        delete(administrador.getId());
+        administradores.add(administrador);
+
+    }
 }

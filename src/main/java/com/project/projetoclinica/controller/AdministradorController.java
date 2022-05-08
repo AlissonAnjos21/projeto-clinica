@@ -31,4 +31,16 @@ public class AdministradorController {
         return new ResponseEntity<>(administradorService.save(administrador), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        administradorService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> replace(@RequestBody Administrador administrador) {
+        administradorService.replace(administrador);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
