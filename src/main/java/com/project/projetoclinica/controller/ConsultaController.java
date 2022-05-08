@@ -31,4 +31,16 @@ public class ConsultaController {
         return new ResponseEntity<>(consultaService.save(consulta), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        consultaService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> replace(@RequestBody Consulta consulta) {
+        consultaService.replace(consulta);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

@@ -53,4 +53,13 @@ public class ConsultaService {
         return consulta;
     }
 
+    public void delete(long id) {
+        consultas.remove(findById(id));
+    }
+
+    public void replace(Consulta consulta) {
+        delete(consulta.getId());
+        consultas.add(consulta);
+    }
+
 }
