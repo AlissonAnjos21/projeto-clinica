@@ -1,6 +1,7 @@
 package com.project.projetoclinica.service;
 
 import com.project.projetoclinica.domain.Medico;
+import com.project.projetoclinica.mapper.MedicoMapper;
 import com.project.projetoclinica.repository.MedicoRepository;
 import com.project.projetoclinica.requests.medico.MedicoPostRequestBody;
 import com.project.projetoclinica.requests.medico.MedicoPutRequestBody;
@@ -29,20 +30,23 @@ public class MedicoService {
     }
 
     public Medico save(MedicoPostRequestBody medicoPostRequestBody) {
-        Medico medico = Medico.builder()
-                .nome(medicoPostRequestBody.getNome())
-                .cpf(medicoPostRequestBody.getCpf())
-                .cnpj(medicoPostRequestBody.getCnpj())
-                .crm(medicoPostRequestBody.getCrm())
-                .dataNascimento(medicoPostRequestBody.getDataNascimento())
-                .endereco(medicoPostRequestBody.getEndereco())
-                .email(medicoPostRequestBody.getEmail())
-                .telefone(medicoPostRequestBody.getTelefone())
-                .tipoContrato(medicoPostRequestBody.getTipoContrato())
-                .especialidade(medicoPostRequestBody.getEspecialidade())
-                .build();
+        /*
+            Medico medico = Medico.builder()
+                    .nome(medicoPostRequestBody.getNome())
+                    .cpf(medicoPostRequestBody.getCpf())
+                    .cnpj(medicoPostRequestBody.getCnpj())
+                    .crm(medicoPostRequestBody.getCrm())
+                    .dataNascimento(medicoPostRequestBody.getDataNascimento())
+                    .endereco(medicoPostRequestBody.getEndereco())
+                    .email(medicoPostRequestBody.getEmail())
+                    .telefone(medicoPostRequestBody.getTelefone())
+                    .tipoContrato(medicoPostRequestBody.getTipoContrato())
+                    .especialidade(medicoPostRequestBody.getEspecialidade())
+                    .build();
+            // Antes de usar o Mapper
+         */
 
-        return medicoRepository.save(medico);
+        return medicoRepository.save(MedicoMapper.INSTANCE.toMedico(medicoPostRequestBody));
     }
 
     public void delete(long id) {
@@ -51,19 +55,25 @@ public class MedicoService {
 
     public void replace(MedicoPutRequestBody medicoPutRequestBody) {
         Medico savedMedico = findByIdOrThrowBadRequestException(medicoPutRequestBody.getId());
-        Medico medico = Medico.builder()
-                .id(savedMedico.getId())
-                .nome(medicoPutRequestBody.getNome())
-                .cpf(medicoPutRequestBody.getCpf())
-                .cnpj(medicoPutRequestBody.getCnpj())
-                .crm(medicoPutRequestBody.getCrm())
-                .dataNascimento(medicoPutRequestBody.getDataNascimento())
-                .endereco(medicoPutRequestBody.getEndereco())
-                .email(medicoPutRequestBody.getEmail())
-                .telefone(medicoPutRequestBody.getTelefone())
-                .tipoContrato(medicoPutRequestBody.getTipoContrato())
-                .especialidade(medicoPutRequestBody.getEspecialidade())
-                .build();
+        Medico medico = MedicoMapper.INSTANCE.toMedico(medicoPutRequestBody);
+        medico.setId(savedMedico.getId());
+
+        /*
+            Medico medico = Medico.builder()
+                    .id(savedMedico.getId())
+                    .nome(medicoPutRequestBody.getNome())
+                    .cpf(medicoPutRequestBody.getCpf())
+                    .cnpj(medicoPutRequestBody.getCnpj())
+                    .crm(medicoPutRequestBody.getCrm())
+                    .dataNascimento(medicoPutRequestBody.getDataNascimento())
+                    .endereco(medicoPutRequestBody.getEndereco())
+                    .email(medicoPutRequestBody.getEmail())
+                    .telefone(medicoPutRequestBody.getTelefone())
+                    .tipoContrato(medicoPutRequestBody.getTipoContrato())
+                    .especialidade(medicoPutRequestBody.getEspecialidade())
+                    .build();
+            // Antes de usar o Mapper
+         */
 
         medicoRepository.save(medico);
     }

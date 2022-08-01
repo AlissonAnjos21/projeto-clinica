@@ -1,6 +1,7 @@
 package com.project.projetoclinica.service;
 
 import com.project.projetoclinica.domain.Consulta;
+import com.project.projetoclinica.mapper.ConsultaMapper;
 import com.project.projetoclinica.repository.ConsultaRepository;
 import com.project.projetoclinica.requests.consulta.ConsultaPostRequestBody;
 import com.project.projetoclinica.requests.consulta.ConsultaPutRequestBody;
@@ -29,16 +30,19 @@ public class ConsultaService {
     }
 
     public Consulta save(ConsultaPostRequestBody consultaPostRequestBody) {
-        Consulta consulta = Consulta.builder()
-                .idMedico(consultaPostRequestBody.getIdMedico())
-                .idPaciente(consultaPostRequestBody.getIdPaciente())
-                .data(consultaPostRequestBody.getData())
-                .hora(consultaPostRequestBody.getHora())
-                .valor(consultaPostRequestBody.getValor())
-                .formaPagamento(consultaPostRequestBody.getFormaPagamento())
-                .build();
+        /*
+            Consulta consulta = Consulta.builder()
+                    .idMedico(consultaPostRequestBody.getIdMedico())
+                    .idPaciente(consultaPostRequestBody.getIdPaciente())
+                    .data(consultaPostRequestBody.getData())
+                    .hora(consultaPostRequestBody.getHora())
+                    .valor(consultaPostRequestBody.getValor())
+                    .formaPagamento(consultaPostRequestBody.getFormaPagamento())
+                    .build();
+            // Antes de usar o Mapper
+         */
 
-        return consultaRepository.save(consulta);
+        return consultaRepository.save(ConsultaMapper.INSTANCE.toConsulta(consultaPostRequestBody));
     }
 
     public void delete(long id) {
@@ -47,15 +51,21 @@ public class ConsultaService {
 
     public void replace(ConsultaPutRequestBody consultaPutRequestBody) {
         Consulta savedConsulta = findByIdOrThrowBadRequestException(consultaPutRequestBody.getId());
-        Consulta consulta = Consulta.builder()
-                .id(savedConsulta.getId())
-                .idMedico(consultaPutRequestBody.getIdMedico())
-                .idPaciente(consultaPutRequestBody.getIdPaciente())
-                .data(consultaPutRequestBody.getData())
-                .hora(consultaPutRequestBody.getHora())
-                .valor(consultaPutRequestBody.getValor())
-                .formaPagamento(consultaPutRequestBody.getFormaPagamento())
-                .build();
+        Consulta consulta = ConsultaMapper.INSTANCE.toConsulta(consultaPutRequestBody);
+        consulta.setId(savedConsulta.getId());
+
+        /*
+            Consulta consulta = Consulta.builder()
+                    .id(savedConsulta.getId())
+                    .idMedico(consultaPutRequestBody.getIdMedico())
+                    .idPaciente(consultaPutRequestBody.getIdPaciente())
+                    .data(consultaPutRequestBody.getData())
+                    .hora(consultaPutRequestBody.getHora())
+                    .valor(consultaPutRequestBody.getValor())
+                    .formaPagamento(consultaPutRequestBody.getFormaPagamento())
+                    .build();
+            // Antes de usar o Mapper
+         */
 
         consultaRepository.save(consulta);
     }

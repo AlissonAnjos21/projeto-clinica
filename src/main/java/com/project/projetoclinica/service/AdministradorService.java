@@ -1,6 +1,7 @@
 package com.project.projetoclinica.service;
 
 import com.project.projetoclinica.domain.Administrador;
+import com.project.projetoclinica.mapper.AdministradorMapper;
 import com.project.projetoclinica.repository.AdministradorRepository;
 import com.project.projetoclinica.requests.administrador.AdministradorPostRequestBody;
 import com.project.projetoclinica.requests.administrador.AdministradorPutRequestBody;
@@ -28,11 +29,14 @@ public class AdministradorService {
     }
 
     public Administrador save(AdministradorPostRequestBody administradorPostRequestBody) {
-        Administrador administrador = Administrador.builder()
-                .usuario(administradorPostRequestBody.getUsuario())
-                .senha(administradorPostRequestBody.getSenha())
-                .build();
-        return administradorRepository.save(administrador);
+        /*
+            Administrador administrador = Administrador.builder()
+                    .usuario(administradorPostRequestBody.getUsuario())
+                    .senha(administradorPostRequestBody.getSenha())
+                    .build();
+            // Antes de usar o Mapper
+         */
+        return administradorRepository.save(AdministradorMapper.INSTANCE.toAdministrador(administradorPostRequestBody));
 
     }
 
@@ -42,11 +46,16 @@ public class AdministradorService {
 
     public void replace(AdministradorPutRequestBody administradorPutRequestBody) {
         Administrador savedAdministrador = findByIdOrThrowBadRequestException(administradorPutRequestBody.getId());  // Se certifica de que esse administrador realmente existe, caso contrário lança uma exceção
-        Administrador administrador = Administrador.builder()
-                .id(savedAdministrador.getId())
-                .usuario(administradorPutRequestBody.getUsuario())
-                .senha(administradorPutRequestBody.getSenha())
-                .build();
+        Administrador administrador = AdministradorMapper.INSTANCE.toAdministrador(administradorPutRequestBody);
+        administrador.setId(savedAdministrador.getId());
+        /*
+            Administrador administrador = Administrador.builder()
+                    .id(savedAdministrador.getId())
+                    .usuario(administradorPutRequestBody.getUsuario())
+                    .senha(administradorPutRequestBody.getSenha())
+                    .build();
+            // Antes de usar o Mapper
+         */
 
         administradorRepository.save(administrador);
     }
