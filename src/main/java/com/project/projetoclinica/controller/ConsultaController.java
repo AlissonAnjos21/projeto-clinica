@@ -14,33 +14,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConsultaController {
 
-    private final ConsultaService consultaService;
-
-    @GetMapping
-    public ResponseEntity<List<Consulta>> list() {
-        return ResponseEntity.ok(consultaService.list());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Consulta> findById(@PathVariable long id) {
-        return ResponseEntity.ok(consultaService.findById(id));
-    }
-
-    @PostMapping
-    public ResponseEntity<Consulta> save(@RequestBody Consulta consulta) {
-        return new ResponseEntity<>(consultaService.save(consulta), HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable long id) {
-        consultaService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Consulta consulta) {
-        consultaService.replace(consulta);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+//    private final ConsultaService consultaService;
+//
+//    @GetMapping
+//    public ResponseEntity<List<Consulta>> listAll() {
+//        return ResponseEntity.ok(consultaService.listAll());
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Consulta> findById(@PathVariable long id) {
+//        return ResponseEntity.ok(consultaService.findById(id));
+//    }
+//
+//    @PostMapping
+//    public ResponseEntity<Consulta> save(@RequestBody Consulta consulta) {
+//        return new ResponseEntity<>(consultaService.save(consulta), HttpStatus.CREATED);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> delete(@PathVariable long id) {
+//        consultaService.delete(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+//
+//    @PutMapping
+//    public ResponseEntity<Void> replace(@RequestBody Consulta consulta) {
+//        consultaService.replace(consulta);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
 }

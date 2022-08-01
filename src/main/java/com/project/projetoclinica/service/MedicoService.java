@@ -1,68 +1,71 @@
 package com.project.projetoclinica.service;
 
 import com.project.projetoclinica.domain.Medico;
+import com.project.projetoclinica.repository.MedicoRepository;
+import com.project.projetoclinica.requests.medico.MedicoPostRequestBody;
+import com.project.projetoclinica.requests.medico.MedicoPutRequestBody;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@RequiredArgsConstructor
 public class MedicoService {
 
-    private static List<Medico> medicos;
-    static {
-        medicos = new ArrayList<>(List.of(new Medico(
-                        1L,
-                        "Raquel",
-                        "###.###.###-##",
-                        "XX.XXX.XXX/0001-XX",
-                        "CRM/BA 123456",
-                        "05/12/2003",
-                        "Rua Muito Ruim",
-                        "emaildaraquel@emails.com",
-                        "###########",
-                        "Público",
-                        "Psiquiatria"),
-                new Medico(
-                        2L,
-                        "Caio",
-                        "###.###.###-##",
-                        "XX.XXX.XXX/0001-XX",
-                        "CRM/BA 456789",
-                        "29/03/2004",
-                        "Rua Muito Boa",
-                        "emaildocaio@emails.com",
-                        "###########",
-                        "Privado",
-                        "Infectologia"
-                )));
+    private final MedicoRepository medicoRepository;
+
+    public List<Medico> listAll() {
+        return medicoRepository.findAll();
     }
 
-    public List<Medico> list() {
-        return medicos;
+    public Medico findByIdOrThrowBadRequestException(long id) {
+        return medicoRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.BAD_REQUEST, "Médico não encontrado."));
     }
 
-    public Medico findById(long id) {
-        return medicos.stream().filter(medico -> medico.getId().equals(id)).findFirst().orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Médico não encontrado."));
-    }
+    public Medico save(MedicoPostRequestBody medicoPostRequestBody) {
+        Medico medico = Medico.builder()
+                .nome(medicoPostRequestBody.getNome())
+                .cpf(medicoPostRequestBody.getCpf())
+                .cnpj(medicoPostRequestBody.getCnpj())
+                .crm(medicoPostRequestBody.getCrm())
+                .dataNascimento(medicoPostRequestBody.getDataNascimento())
+                .endereco(medicoPostRequestBody.getEndereco())
+                .email(medicoPostRequestBody.getEmail())
+                .telefone(medicoPostRequestBody.getTelefone())
+                .tipoContrato(medicoPostRequestBody.getTipoContrato())
+                .especialidade(medicoPostRequestBody.getEspecialidade())
+                .build();
 
-    public Medico save(Medico medico) {
-        medico.setId(ThreadLocalRandom.current().nextLong(3, 1000000));
-        medicos.add(medico);
-        return medico;
+        return medicoRepository.save(medico);
     }
 
     public void delete(long id) {
-        medicos.remove(findById(id));
+        medicoRepository.delete(findByIdOrThrowBadRequestException(id));
     }
 
-    public void replace(Medico medico) {
-        delete(medico.getId());
-        medicos.add(medico);
+    public void replace(MedicoPutRequestBody medicoPutRequestBody) {
+        Medico savedMedico = findByIdOrThrowBadRequestException(medicoPutRequestBody.getId());
+        Medico medico = Medico.builder()
+                .id(savedMedico.getId())
+                .nome(medicoPutRequestBody.getNome())
+                .cpf(medicoPutRequestBody.getCpf())
+                .cnpj(medicoPutRequestBody.getCnpj())
+                .crm(medicoPutRequestBody.getCrm())
+                .dataNascimento(medicoPutRequestBody.getDataNascimento())
+                .endereco(medicoPutRequestBody.getEndereco())
+                .email(medicoPutRequestBody.getEmail())
+                .telefone(medicoPutRequestBody.getTelefone())
+                .tipoContrato(medicoPutRequestBody.getTipoContrato())
+                .especialidade(medicoPutRequestBody.getEspecialidade())
+                .build();
+
+        medicoRepository.save(medico);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.project.projetoclinica.controller;
 
 import com.project.projetoclinica.domain.Medico;
+import com.project.projetoclinica.requests.medico.MedicoPostRequestBody;
+import com.project.projetoclinica.requests.medico.MedicoPutRequestBody;
 import com.project.projetoclinica.service.MedicoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,18 +19,18 @@ public class MedicoController {
     private final MedicoService medicoService;
 
     @GetMapping
-    public ResponseEntity<List<Medico>> list() {
-        return ResponseEntity.ok(medicoService.list());
+    public ResponseEntity<List<Medico>> listAll() {
+        return ResponseEntity.ok(medicoService.listAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Medico> findById(@PathVariable long id) {
-        return ResponseEntity.ok(medicoService.findById(id));
+        return ResponseEntity.ok(medicoService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Medico> save(@RequestBody Medico medico) {
-        return new ResponseEntity<>(medicoService.save(medico), HttpStatus.CREATED);
+    public ResponseEntity<Medico> save(@RequestBody MedicoPostRequestBody medicoPostRequestBody) {
+        return new ResponseEntity<>(medicoService.save(medicoPostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -38,8 +40,8 @@ public class MedicoController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Medico medico) {
-        medicoService.replace(medico);
+    public ResponseEntity<Void> replace(@RequestBody MedicoPutRequestBody medicoPutRequestBody) {
+        medicoService.replace(medicoPutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

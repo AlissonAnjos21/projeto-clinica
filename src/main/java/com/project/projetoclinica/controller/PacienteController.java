@@ -1,6 +1,8 @@
 package com.project.projetoclinica.controller;
 
 import com.project.projetoclinica.domain.Paciente;
+import com.project.projetoclinica.requests.paciente.PacientePostRequestBody;
+import com.project.projetoclinica.requests.paciente.PacientePutRequestBody;
 import com.project.projetoclinica.service.PacienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,18 +19,18 @@ public class PacienteController {
     private final PacienteService pacienteService;
 
     @GetMapping
-    public ResponseEntity<List<Paciente>> list() {
-        return ResponseEntity.ok(pacienteService.list());
+    public ResponseEntity<List<Paciente>> listAll() {
+        return ResponseEntity.ok(pacienteService.listAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> findById(@PathVariable long id) {
-        return ResponseEntity.ok(pacienteService.findById(id));
+        return ResponseEntity.ok(pacienteService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Paciente> save(@RequestBody Paciente paciente) {
-        return new ResponseEntity<>(pacienteService.save(paciente), HttpStatus.CREATED);
+    public ResponseEntity<Paciente> save(@RequestBody PacientePostRequestBody pacientePostRequestBody) {
+        return new ResponseEntity<>(pacienteService.save(pacientePostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -38,8 +40,8 @@ public class PacienteController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Paciente paciente) {
-        pacienteService.replace(paciente);
+    public ResponseEntity<Void> replace(@RequestBody PacientePutRequestBody pacientePutRequestBody) {
+        pacienteService.replace(pacientePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

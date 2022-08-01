@@ -1,6 +1,8 @@
 package com.project.projetoclinica.controller;
 
 import com.project.projetoclinica.domain.Administrador;
+import com.project.projetoclinica.requests.administrador.AdministradorPostRequestBody;
+import com.project.projetoclinica.requests.administrador.AdministradorPutRequestBody;
 import com.project.projetoclinica.service.AdministradorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,18 +19,18 @@ public class AdministradorController {
     private final AdministradorService administradorService;
 
     @GetMapping
-    public ResponseEntity<List<Administrador>> list() {
-        return ResponseEntity.ok(administradorService.list());
+    public ResponseEntity<List<Administrador>> listAll() {
+        return ResponseEntity.ok(administradorService.listAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Administrador> findById(@PathVariable long id) {
-        return ResponseEntity.ok(administradorService.findById(id));
+        return ResponseEntity.ok(administradorService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Administrador> save(@RequestBody Administrador administrador) {
-        return new ResponseEntity<>(administradorService.save(administrador), HttpStatus.CREATED);
+    public ResponseEntity<Administrador> save(@RequestBody AdministradorPostRequestBody administradorPostRequestBody) {
+        return new ResponseEntity<>(administradorService.save(administradorPostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -38,8 +40,8 @@ public class AdministradorController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Administrador administrador) {
-        administradorService.replace(administrador);
+    public ResponseEntity<Void> replace(@RequestBody AdministradorPutRequestBody administradorPutRequestBody) {
+        administradorService.replace(administradorPutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

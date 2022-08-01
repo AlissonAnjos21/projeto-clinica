@@ -1,6 +1,10 @@
 package com.project.projetoclinica.service;
 
 import com.project.projetoclinica.domain.Paciente;
+import com.project.projetoclinica.repository.PacienteRepository;
+import com.project.projetoclinica.requests.paciente.PacientePostRequestBody;
+import com.project.projetoclinica.requests.paciente.PacientePutRequestBody;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,62 +14,61 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@RequiredArgsConstructor
 public class PacienteService {
 
-    private static List<Paciente> pacientes;
-    static {
-        pacientes = new ArrayList<>(List.of(new Paciente(
-                        1L,
-                        "Pessoa1",
-                        "###.###.###-##",
-                        "emaildapessoa1@emails.com",
-                        "01/01/2001",
-                        "###########",
-                        "###########",
-                        "Programadora",
-                        "Rua das Ruas",
-                        "Familiar",
-                        new ArrayList<>(List.of("camarão", "amendoim")),
-                        new ArrayList<>(List.of("diabetes", "alzheimer", "osteoporose"))),
-                new Paciente(
-                        2L,
-                        "Pessoa2",
-                        "###.###.###-##",
-                        "emaildapessoa2@emails.com",
-                        "01/01/2001",
-                        "###########",
-                        "###########",
-                        "Paleontóloga",
-                        "Rua das Sem Saída",
-                        "Familiar",
-                        new ArrayList<>(List.of("água", "ovos")),
-                        new ArrayList<>(List.of("câncer", "asma")))));
+    private final PacienteRepository pacienteRepository;
 
-
+    public List<Paciente> listAll() {
+        return pacienteRepository.findAll();
     }
 
-    public List<Paciente> list() {
-        return pacientes;
+    public Paciente findByIdOrThrowBadRequestException(long id) {
+        return pacienteRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paciente não encontrado."));
     }
 
-    public Paciente findById(long id) {
-        return pacientes.stream().filter(pacientes -> pacientes.getId().equals(id)).findFirst().orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paciente não encontrado."));
-    }
+    public Paciente save(PacientePostRequestBody pacientePostRequestBody) {
+        Paciente paciente = Paciente.builder()
+                .nome(pacientePostRequestBody.getNome())
+                .cpf(pacientePostRequestBody.getCpf())
+                .email(pacientePostRequestBody.getEmail())
+                .dataNascimento(pacientePostRequestBody.getDataNascimento())
+                .telefone(pacientePostRequestBody.getTelefone())
+                .telefoneFamiliar(pacientePostRequestBody.getTelefoneFamiliar())
+                .ocupacao(pacientePostRequestBody.getOcupacao())
+                .endereco(pacientePostRequestBody.getEndereco())
+                .planoSaude(pacientePostRequestBody.getPlanoSaude())
+                .alergias(pacientePostRequestBody.getAlergias())
+                .doencas(pacientePostRequestBody.getDoencas())
+                .build();
 
-    public Paciente save(Paciente paciente) {
-        paciente.setId(ThreadLocalRandom.current().nextLong(3, 1000000));
-        pacientes.add(paciente);
-        return paciente;
+        return pacienteRepository.save(paciente);
     }
 
     public void delete(long id) {
-        pacientes.remove(findById(id));
+        pacienteRepository.delete(findByIdOrThrowBadRequestException(id));
     }
 
-    public void replace(Paciente paciente) {
-        delete(paciente.getId());
-        pacientes.add(paciente);
+    public void replace(PacientePutRequestBody pacientePutRequestBody) {
+        Paciente savedPaciente = findByIdOrThrowBadRequestException(pacientePutRequestBody.getId());
+        Paciente paciente = Paciente.builder()
+                .id(savedPaciente.getId())
+                .nome(pacientePutRequestBody.getNome())
+                .cpf(pacientePutRequestBody.getCpf())
+                .email(pacientePutRequestBody.getEmail())
+                .dataNascimento(pacientePutRequestBody.getDataNascimento())
+                .telefone(pacientePutRequestBody.getTelefone())
+                .telefoneFamiliar(pacientePutRequestBody.getTelefoneFamiliar())
+                .ocupacao(pacientePutRequestBody.getOcupacao())
+                .endereco(pacientePutRequestBody.getEndereco())
+                .planoSaude(pacientePutRequestBody.getPlanoSaude())
+                .alergias(pacientePutRequestBody.getAlergias())
+                .doencas(pacientePutRequestBody.getDoencas())
+                .build();
+
+        pacienteRepository.save(paciente);
     }
 
 }

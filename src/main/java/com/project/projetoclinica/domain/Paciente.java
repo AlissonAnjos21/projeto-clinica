@@ -1,6 +1,7 @@
 package com.project.projetoclinica.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Entity
 @NoArgsConstructor
+@Builder
 public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
