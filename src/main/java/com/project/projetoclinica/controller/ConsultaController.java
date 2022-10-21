@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -32,10 +31,10 @@ public class ConsultaController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<Consulta>> findByDataIdPacienteAndIdMedico(@RequestParam(required = false) String data, @RequestParam(required = false) long idPaciente, @RequestParam(required = false) long idMedico) {
+    public ResponseEntity<List<Consulta>> findByDataIdPacienteAndIdMedico(@RequestParam(required = false) String data, @RequestParam(required = false) Long idPaciente, @RequestParam(required = false) Long idMedico) {
         if(data != null) {
             return ResponseEntity.ok(consultaService.findByData(data));
-        }else if(idPaciente >= 0) {
+        }else if(idPaciente != null) {
             return ResponseEntity.ok(consultaService.findByIdPaciente(idPaciente ));
         }else{
             return ResponseEntity.ok(consultaService.findByIdMedico(idMedico));
